@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en" xmlns:th="http://www.thymeleaf.org">
+        <head>
+        <title>Product</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Product management</h1>
+            <a class="btn btn-primary" href="/" role="button">Home</a>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" class="btn btn-success" value="Logout">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mt-5">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 mt-1">
+            <form method="post" onsubmit="addProduct()">
+                <input type="hidden" class="form-control" name="id">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" id="name">
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" name="price" id="price">
+                </div>
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="number" class="form-control" name="quantity" id="quantity">
+                </div>
+                <button type="button" class="btn btn-primary" id="save">Save</button>
+                <a class="btn btn-primary" href="/product" role="button">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $('#save').click(function (e) {
+        e.preventDefault();
+        addProduct();
+    })
+
+    function addProduct() {
+        var url = `/api/product`
+        var param = {
+            "name": $('#name').val(),
+            "price": $('#price').val(),
+            "quantity": $('#quantity').val()
+        }
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify(param),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                window.location = "/product";
+            }
+        });
+    }
+</script>
+</body>
+</html>
